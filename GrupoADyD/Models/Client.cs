@@ -16,7 +16,7 @@ namespace GrupoADyD.Models
 
         public virtual ICollection<Sale> Sales { get; set; }
 
-        public ApplicationUser Partner { get; set; }
+        public ApplicationUser Usuario { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModificationDate { get; set; }
     }
