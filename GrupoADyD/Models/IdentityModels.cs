@@ -39,6 +39,21 @@ namespace GrupoADyD.Models
             modelBuilder.Entity<DetailedSale>()
                 .HasRequired(d => d.Sale)
                 .WithRequiredPrincipal(d => d.DetailedSale);
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.RowVersion)
+                .IsConcurrencyToken();
+
+            modelBuilder.Entity<Sale>()
+                .Property(p => p.RowVersion)
+                .IsConcurrencyToken();
+
+            modelBuilder.Entity<Client>()
+                .Property(p => p.RowVersion)
+                .IsConcurrencyToken();
+            //modelBuilder.Entity<Sale>()
+            //    .HasRequired(c => c.Sales)
+            //    .WithRequired(s => s.Client);
         }
 
         public static ApplicationDbContext Create()

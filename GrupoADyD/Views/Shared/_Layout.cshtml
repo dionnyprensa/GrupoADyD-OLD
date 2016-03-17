@@ -2,7 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title - Grupo AD&D</title>
+    <title>
+        @{
+            var title = "";
+
+            if (ViewBag.Title == null || ViewBag.Title == "")
+            {
+                title = "Inicio - Grupo AD&D";
+            }
+            else
+            {
+                title = ViewBag.Title + " - Grupo AD&D";
+            }
+        }
+        @title
+    </title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")

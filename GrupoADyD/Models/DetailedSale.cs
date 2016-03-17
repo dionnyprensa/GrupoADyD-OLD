@@ -8,7 +8,11 @@ namespace GrupoADyD.Models
     public class DetailedSale
     {
         [DisplayName("Id")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DetailedSaleId { get; set; }
+
+        public int  SaleId { get; set; }
 
         [DisplayName("Descuento")]
         public decimal Discount { get; set; }
@@ -19,10 +23,9 @@ namespace GrupoADyD.Models
         [DisplayName("Precio")]
         public decimal Price { get; set; }
 
-        [ForeignKey("Product")]
-        public int ProductId { get; set; }
-
         public virtual Sale Sale { get; set; }
+
+        [ForeignKey("ProductId")]
         public virtual ICollection<Product> Products { get; set; }
         public virtual Client Client { get; set; }
     }

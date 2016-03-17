@@ -35,7 +35,8 @@ namespace GrupoADyD.Controllers
         // GET api/Me
         public GetViewModel Get()
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
+            var user = UserManager.FindById(HttpContext.Current.User.Identity.GetUserId());
+
             return new GetViewModel() { Hometown = user.Hometown };
         }
     }

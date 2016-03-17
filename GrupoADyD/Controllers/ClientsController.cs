@@ -4,9 +4,13 @@ using System.Net;
 using System.Web.Mvc;
 using GrupoADyD.Models;
 using System;
+using GrupoADyD.ViewModels;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 
 namespace GrupoADyD.Controllers
 {
+    [Authorize]
     public class ClientsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -15,21 +19,6 @@ namespace GrupoADyD.Controllers
         public async Task<ActionResult> Index()
         {
             return View(await db.Clients.ToListAsync());
-        }
-
-        // GET: Clients/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = await db.Clients.FindAsync(id);
-            if (client == null)
-            {
-                return HttpNotFound();
-            }
-            return View(client);
         }
 
         // GET: Clients/Create
@@ -43,19 +32,78 @@ namespace GrupoADyD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ClientId,FirstName,LastName,Phone,Discount,ToCost,Direction,CreatedBy,CreationDate,ModificationDate")] Client client)
+        public async Task<ActionResult> Create(ClientViewModel ClientViewModel)
         {
-            client.UserName.UserName = HttpContext.User.Identity.Name.ToString();
-            client.CreationDate = new DateTime();
-            client.ModificationDate = new DateTime().Date;
+            var client = new Client
+            {
+                ClientId = 1,
+                FirstName = ClientViewModel.FirstName,
+                LastName = ClientViewModel.LastName,
+                Phone = ClientViewModel.Phone,
+                Discount = ClientViewModel.Discount,
+                ToCost = ClientViewModel.ToCost,
+                Direction = ClientViewModel.Direction,
+                CreatedBy = HttpContext.User.Identity.Name.ToString(),
+                CreationDate = DateTime.Now,
+                ModificationDate = DateTime.Now
+            };
 
             if (ModelState.IsValid)
             {
+
                 db.Clients.Add(client);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
+            ModelState.AddModelError(string.Empty, "No se puede crear.");
+            return View(client);
+        }
+
+        // GET: Clients/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Client client = await db.Clients.FindAsync(id);
+
+            if (client == null)
+            {
+                return HttpNotFound();
+            }
+            return View(client);
+        }
+        
+        // POST: Clients/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(ClientViewModel ClientViewModel)
+        {
+            var client = new Client
+            {
+                //ClientId = 1,
+                FirstName = ClientViewModel.FirstName,
+                LastName = ClientViewModel.LastName,
+                Phone = ClientViewModel.Phone,
+                Discount = ClientViewModel.Discount,
+                ToCost = ClientViewModel.ToCost,
+                Direction = ClientViewModel.Direction,
+                CreatedBy = HttpContext.User.Identity.Name.ToString(),
+                ModificationDate = DateTime.Now
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(client).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
             return View(client);
         }
 
@@ -66,31 +114,27 @@ namespace GrupoADyD.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = await db.Clients.FindAsync(id);
+
+            var client = await db.Clients.FindAsync(id);
+
+
+            var ClientViewModel = new ClientViewModel
+            {
+                //ClientId = 1,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                Phone = client.Phone,
+                Discount = client.Discount,
+                ToCost = client.ToCost,
+                Direction = client.Direction
+            };
+
             if (client == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(ClientViewModel);
         }
-
-        // POST: Clients/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ClientId,FirstName,LastName,Phone,Discount,ToCost,Direction,CreatedBy,CreationDate,ModificationDate")] Client client)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(client).State = EntityState.Modified;
-                client.ModificationDate = new DateTime().Date;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(client);
-        }
-
         // GET: Clients/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
