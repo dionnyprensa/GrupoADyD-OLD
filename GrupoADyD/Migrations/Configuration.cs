@@ -1,18 +1,15 @@
 namespace GrupoADyD.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<GrupoADyD.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Models.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(GrupoADyD.Models.ApplicationDbContext context)
+        protected override void Seed(Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

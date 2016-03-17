@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="GrupoADyD-Web.config Connection String" description="GrupoADyD Connection String used in web.config by the application to access the database." defaultValue="&#xD;&#xA;         Data Source=universe.database.windows.net;&#xD;&#xA;         Initial Catalog=grupoadyd;&#xD;&#xA;         Integrated Security=False;&#xD;&#xA;         User ID=dprensa;&#xD;&#xA;         Password=asdf@12e{~;&#xD;&#xA;         Connect Timeout=60;&#xD;&#xA;         Encrypt=False;&#xD;&#xA;         TrustServerCertificate=False;&#xD;&#xA;         ApplicationIntent=ReadWrite;&#xD;&#xA;         MultiSubnetFailover=False" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\D\\Desarrollo\\Proyectos\\Visual\ Studio\\GrupoADyD\\GrupoADyD\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='GrupoADyD']/@connectionString" />
+  </parameter>
+</parameters>
