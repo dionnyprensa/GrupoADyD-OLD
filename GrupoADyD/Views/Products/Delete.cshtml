@@ -1,4 +1,4 @@
-﻿@model GrupoADyD.Models.Client
+﻿@model GrupoADyD.Models.Product
 
 @{
     ViewBag.Title = "Borrar";
@@ -6,58 +6,74 @@
 }
 
 <h2>Borrar</h2>
-<h4>Cliente</h4>
+<h4>Producto</h4>
 
 <div>
-    <h3>¿Desear borrar el Cliente?</h3>
+    <h3>¿Desear borrar el producto?</h3>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.Code)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.Code)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Phone)
+            @Html.DisplayNameFor(model => model.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Phone)
+            @Html.DisplayFor(model => model.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Discount)
+            @Html.DisplayNameFor(model => model.PV)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Discount)
+            @Html.DisplayFor(model => model.PV)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ToCost)
+            @Html.DisplayNameFor(model => model.BV)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ToCost)
+            @Html.DisplayFor(model => model.BV)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Direction)
+            @Html.DisplayNameFor(model => model.Cost)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Direction)
+            @Html.DisplayFor(model => model.Cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BestSelling)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BestSelling)
         </dd>
 
         <dt>
@@ -83,6 +99,7 @@
         <dd>
             @Html.DisplayFor(model => model.ModificationDate)
         </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {

@@ -1,12 +1,10 @@
-﻿using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web.Mvc;
-using GrupoADyD.Models;
-using System;
+﻿using GrupoADyD.Models;
 using GrupoADyD.ViewModels;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+using System;
+using System.Data.Entity;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace GrupoADyD.Controllers
 {
@@ -28,7 +26,7 @@ namespace GrupoADyD.Controllers
         }
 
         // POST: Clients/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -50,7 +48,6 @@ namespace GrupoADyD.Controllers
 
             if (ModelState.IsValid)
             {
-
                 db.Clients.Add(client);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -76,32 +73,30 @@ namespace GrupoADyD.Controllers
             }
             return View(client);
         }
-        
+
         // POST: Clients/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(ClientViewModel ClientViewModel)
+        public async Task<ActionResult> Edit(Client model)
         {
-            var client = new Client
-            {
-                //ClientId = 1,
-                FirstName = ClientViewModel.FirstName,
-                LastName = ClientViewModel.LastName,
-                Phone = ClientViewModel.Phone,
-                Discount = ClientViewModel.Discount,
-                ToCost = ClientViewModel.ToCost,
-                Direction = ClientViewModel.Direction,
-                CreatedBy = HttpContext.User.Identity.Name.ToString(),
-                ModificationDate = DateTime.Now
-            };
+            var client = await db.Clients.FindAsync(model.ClientId);
+
+            client.ClientId = model.ClientId;
+            client.FirstName = model.FirstName;
+            client.LastName = model.LastName;
+            client.Phone = model.Phone;
+            client.Discount = model.Discount;
+            client.ToCost = model.ToCost;
+            client.Direction = model.Direction;
+            client.CreatedBy = HttpContext.User.Identity.Name.ToString();
+            client.ModificationDate = DateTime.Now;
 
             if (ModelState.IsValid)
             {
                 db.Entry(client).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-
                 return RedirectToAction("Index");
             }
             return View(client);
@@ -117,24 +112,13 @@ namespace GrupoADyD.Controllers
 
             var client = await db.Clients.FindAsync(id);
 
-
-            var ClientViewModel = new ClientViewModel
-            {
-                //ClientId = 1,
-                FirstName = client.FirstName,
-                LastName = client.LastName,
-                Phone = client.Phone,
-                Discount = client.Discount,
-                ToCost = client.ToCost,
-                Direction = client.Direction
-            };
-
             if (client == null)
             {
                 return HttpNotFound();
             }
-            return View(ClientViewModel);
+            return View(client);
         }
+
         // GET: Clients/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {

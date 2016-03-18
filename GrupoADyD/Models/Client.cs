@@ -30,13 +30,13 @@ namespace GrupoADyD.Models
         [DisplayName("Direccion")]
         public string Direction { get; set; }
 
+        public virtual ICollection<Sale> Sales { get; set; }
+
         [DisplayName("Usuario")]
         public string CreatedBy { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
-
-        //public virtual ICollection<Sale> Sales { get; set; }
 
         [DisplayName("Fecha de Creacion")]
         [DataType(DataType.DateTime)]

@@ -10,6 +10,7 @@ namespace GrupoADyD.Models
     public class ApplicationUser : IdentityUser
     {
         public string Hometown { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -30,6 +31,7 @@ namespace GrupoADyD.Models
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);

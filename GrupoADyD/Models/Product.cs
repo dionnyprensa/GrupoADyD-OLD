@@ -34,8 +34,8 @@ namespace GrupoADyD.Models
         [DisplayName("Price")]
         public decimal Price { get; set; }
 
-        [DisplayName("BestSeller")]
-        public int BestSeller { get; set; }
+        [DisplayName("Vendido")]
+        public int BestSelling { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
@@ -44,7 +44,7 @@ namespace GrupoADyD.Models
         public virtual ICollection<Client> Clients { get; set; }
 
         [DisplayName("Usuario")]
-        public virtual ApplicationUser User { get; set; }
+        public string CreatedBy { get; set; }
 
         [DisplayName("Fecha de Creacion")]
         [DataType(DataType.DateTime)]

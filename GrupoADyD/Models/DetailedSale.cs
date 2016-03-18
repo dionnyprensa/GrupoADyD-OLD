@@ -12,7 +12,7 @@ namespace GrupoADyD.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DetailedSaleId { get; set; }
 
-        public int  SaleId { get; set; }
+        public int SaleId { get; set; }
 
         [DisplayName("Descuento")]
         public decimal Discount { get; set; }
@@ -27,6 +27,7 @@ namespace GrupoADyD.Models
 
         [ForeignKey("ProductId")]
         public virtual ICollection<Product> Products { get; set; }
+
         public virtual Client Client { get; set; }
     }
 }

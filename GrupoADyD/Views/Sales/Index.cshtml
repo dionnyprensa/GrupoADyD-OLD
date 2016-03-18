@@ -1,0 +1,67 @@
+﻿@model IEnumerable<GrupoADyD.Models.Sale>
+
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Inicio - Ventas</h2>
+
+<p>
+    @Html.ActionLink("Crear nueva", "Create")
+</p>
+<table class="table table-striped table-responsive table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SalesNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModificationDate)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesNumber)
+            </td>
+            <td>
+                <a href="/Clients/Details/@Html.DisplayFor(modelItem => item.Client.ClientId)">@Html.DisplayFor(modelItem => item.Client.FirstName) @Html.DisplayFor(modelItem => item.Client.LastName)</a>
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModificationDate)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.SaleId }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.SaleId }) |
+                @Html.ActionLink("Borrar", "Delete", new { id = item.SaleId })
+            </td>
+        </tr>
+    }
+
+</table>

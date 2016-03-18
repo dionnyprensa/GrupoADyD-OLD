@@ -1,0 +1,71 @@
+﻿@model GrupoADyD.Models.DetailedSale
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="button">Codigo</button>
+                </div>
+                <input type="text" class="form-control">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="button">Nombre</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <table class="table table-striped table-responsive table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>PV</th> @* no write *@
+                    <th>BV</th>@* no write *@
+                    <th>Costo</th>@* no write *@
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>asdf</td>
+                    <td>qwet</td>
+                    <td>fsdg</td>
+                    <td>urew</td>
+                    <td>vbcj</td>
+                    <td>oowc</td>
+                </tr>
+                <tr>
+                    <td>urew</td>
+                    <td>vbcj</td>
+                    <td>oowc</td>
+                    <td>asdf</td>
+                    <td>qwet</td>
+                    <td>fsdg</td>
+                </tr>
+                <tr>
+                    <td>asdf</td>
+                    <td>qwet</td>
+                    <td>fsdg</td>
+                    <td>urew</td>
+                    <td>vbcj</td>
+                    <td>oowc</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
