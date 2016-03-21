@@ -1,0 +1,85 @@
+﻿@model GrupoADyD.Models.Product
+
+<div class="form-group" id="DetailsProduct">
+    <table class="table">
+        <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>PV</th>
+            <th>BV</th>
+            <th>Costo</th>
+            <th>Precio</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(Model => Model.Code)
+            </td>
+            <td>
+                <a href="~/Products/Details/@Html.DisplayFor(Model => Model.ProductId)">
+                    @Html.DisplayFor(Model => Model.Name)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.PV)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.PV)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.Price)
+            </td>
+            <td>
+                <a href="#">
+                    Agregar
+                </a>
+            </td>
+        </tr>
+    </table>
+    @*<input type="hidden" value="@Html.DisplayFor(Model => Model.ProductId)" />*@
+</div>
+
+@*@model IEnumerable<GrupoADyD.Models.Product>
+
+    <div class="form-group" id="DetailsProduct">
+        <table class="table">
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>PV</th>
+                <th>BV</th>
+                <th>Costo</th>
+                <th>Precio</th>
+            </tr>
+
+            @foreach (var Model in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(Model => Model.Code)
+                    </td>
+                    <td>
+                        <a href="~/Clients/Details/@Html.DisplayFor(Model => Model.ProductId)">
+                            @Html.DisplayFor(Model => Model.Name)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(Model => Model.PV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(Model => Model.PV)%
+                    </td>
+                    <td>
+                        @Html.DisplayFor(Model => Model.Cost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(Model => Model.Price)%
+                    </td>
+                </tr>
+            }
+        </table>
+        @*<input type="hidden" value="@Html.DisplayFor(Model => Model.ProductId)" />@
+    </div>*@

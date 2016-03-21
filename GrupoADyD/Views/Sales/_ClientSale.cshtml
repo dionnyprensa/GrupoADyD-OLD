@@ -1,0 +1,23 @@
+﻿@model GrupoADyD.Models.Client
+
+<div class="form-group" id="DetailsClient">
+    <input type="hidden" value="@Html.DisplayFor(Model => Model.ClientId)" />
+    <table class="table">
+        <tr>
+            <th>Nombre</th>
+            <th>A Costo</th>
+            <th>Descuento</th>
+        </tr>
+        <tr>
+            <td>
+                <a href="~/Clients/Details/@Html.DisplayFor(Model => Model.ClientId)">@Html.DisplayFor(Model => Model.FirstName) @Html.DisplayFor(Model => Model.LastName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.ToCost)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Discount)%
+            </td>
+        </tr>
+    </table>
+</div>

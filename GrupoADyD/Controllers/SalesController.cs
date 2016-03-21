@@ -1,20 +1,23 @@
-﻿using System.Data.Entity;
-using System.Threading.Tasks;
+﻿using GrupoADyD.Models;
+using GrupoADyD.Models.Repositories;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using GrupoADyD.Models;
 
 namespace GrupoADyD.Controllers
 {
     public class SalesController : Controller
     {
+        private ClientRepository ClientRepository = new ClientRepository();
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Sales
         public async Task<ActionResult> Index()
         {
-            var sales = db.Sales.Include(s => s.DetailedSale);
-            return View(await sales.ToListAsync());
+            //var sales = db.Sales.Include(s => s.DetailedSale);
+            return View(await db.Sales.ToListAsync());
         }
 
         // GET: Sales/Details/5
@@ -35,12 +38,13 @@ namespace GrupoADyD.Controllers
         // GET: Sales/Create
         public ActionResult Create()
         {
-            ViewBag.SaleId = new SelectList(db.DetailedSales, "DetailedSaleId", "DetailedSaleId");
+            ViewBag.Clients = new SelectList(db.Clients, "ClientId", "FirstName");
+            //ViewBag.Products = new SelectList(db.Products, "ProductId", "Name");
             return View();
         }
 
         // POST: Sales/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -53,7 +57,8 @@ namespace GrupoADyD.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SaleId = new SelectList(db.DetailedSales, "DetailedSaleId", "DetailedSaleId", sale.SaleId);
+            ViewBag.SaleId = new SelectList(db.Clients, "ClientId", "FirstName"
+                , sale.SaleId);
             return View(sale);
         }
 
@@ -69,12 +74,14 @@ namespace GrupoADyD.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SaleId = new SelectList(db.DetailedSales, "DetailedSaleId", "DetailedSaleId", sale.SaleId);
+
+            ViewBag.SaleId = new SelectList(db.Clients, "ClientId", "FirstName"
+                , sale.SaleId);
             return View(sale);
         }
 
         // POST: Sales/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -86,7 +93,10 @@ namespace GrupoADyD.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.SaleId = new SelectList(db.DetailedSales, "DetailedSaleId", "DetailedSaleId", sale.SaleId);
+
+            ViewBag.SaleId = new SelectList(db.Clients, "ClientId", "FirstName"
+                , sale.SaleId);
+
             return View(sale);
         }
 
@@ -123,6 +133,25 @@ namespace GrupoADyD.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult FindById(int Id)
+        {
+            return PartialView("_ClientSale", ClientRepository.FindById(Id));
+        }
+
+        public ActionResult FindProduct(string NameOrCode)
+        {
+            //var result = db.Products.Where(p => p.Name.Contains(NameOrCode)).ToList();
+
+            var result = db.Products.FirstOrDefault(p => p.Code == NameOrCode);
+
+            return PartialView("_ProductSale", result);
+
+            //if (result == null)
+            //    return PartialView("_ProductSale", result);
+            //else
+            //return PartialView("_ProductSale", db.Products.Where(p => p.Code.Contains(NameOrCode)).ToList());
         }
     }
 }

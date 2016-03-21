@@ -1,4 +1,5 @@
 ﻿using GrupoADyD.Models;
+using GrupoADyD.Models.Repositories;
 using GrupoADyD.ViewModels;
 using System;
 using System.Data.Entity;
@@ -11,6 +12,8 @@ namespace GrupoADyD.Controllers
     [Authorize]
     public class ClientsController : Controller
     {
+        private ClientRepository ClientRepository = new ClientRepository();
+
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Clients
