@@ -13,10 +13,11 @@
         </tr>
         <tr>
             <td>
+                <input type="hidden" name="Code" value="@Html.DisplayFor(Model => Model.Code)" />
                 @Html.DisplayFor(Model => Model.Code)
             </td>
             <td>
-                <a href="~/Products/Details/@Html.DisplayFor(Model => Model.ProductId)">
+                <a href="~/Products/Details/@Html.DisplayFor(Model => Model.ProductId)" id="IdProduct">
                     @Html.DisplayFor(Model => Model.Name)
                 </a>
             </td>
@@ -33,14 +34,38 @@
                 @Html.DisplayFor(Model => Model.Price)
             </td>
             <td>
-                <a href="#">
-                    Agregar
-                </a>
+                <input class="btn btn-default" type="button" title="Agregar Producto" value="Agregar" id="AddProduct" name="AddProduct" />
             </td>
         </tr>
     </table>
     @*<input type="hidden" value="@Html.DisplayFor(Model => Model.ProductId)" />*@
 </div>
+
+<script>
+    //Vigila el input text que recibira el codigo
+    //Si se presiona en buscar..
+    $(AddProduct).click(function () {
+
+        //Valida que tenga el input tenga datos
+        if (CodeProduct.length < 1 || (CodeProduct == "")) { }
+
+            //De lo contrario si 
+        else if (CodeProduct.length >= 1) {
+
+            //Traer via Ajax (con jQuery POST) el Cliente a travez del Id
+            $.post("AddProductToTable", { "Code": CodeProduct }, function (data) {
+
+                //Devuelve el Pa la vista parcial
+                $('#TableProducts').html(data);
+            });
+
+        } else {
+
+            //Devuelve null a la vista parcial
+            $('#TableProducts').html(null);
+        }
+    });
+</script>
 
 @*@model IEnumerable<GrupoADyD.Models.Product>
 

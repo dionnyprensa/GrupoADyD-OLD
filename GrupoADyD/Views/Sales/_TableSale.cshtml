@@ -1,0 +1,86 @@
+﻿@model GrupoADyD.Models.Product
+
+@using (Html.BeginForm())
+{
+    decimal TotalPV = 0;
+    decimal TotalBV = 0;
+    decimal TotalCost = 0;
+    decimal TotalPrice = 0;
+    @Html.AntiForgeryToken()
+
+    <div id="TableProducts">
+        <table class="table table-responsive table-bordered table-condensed table-hover TableProducts">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>PV</th>
+                    <th>BV</th>
+                    <th>Costo</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="~/Products/Details/@Html.DisplayFor(Model => Model.ProductId)">
+                            @Html.DisplayFor(Model => Model.Code)
+                        </a>
+                    </td>
+                    <td>
+                        <a href="~/Products/Details/@Html.DisplayFor(Model => Model.ProductId)">
+                            @Html.DisplayFor(Model => Model.Name)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(Model => Model.PV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(Model => Model.BV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(Model => Model.Cost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(Model => Model.Price)
+                    </td>
+                </tr>
+                @{
+                    //TotalPV += ((Model.PV) != null) ? Model.PV : 0;
+                    //TotalPV += ((Model.PV) != null) ? Model.PV : 0;
+                    //TotalPV += ((Model.PV) != null) ? Model.PV : 0;
+                    //TotalPV += ((Model.PV) != null) ? Model.PV : 0;
+
+                    try
+                    { TotalPV += Model.PV; }
+                    catch (NullReferenceException ex)
+                    { TotalPV += 0; }
+
+                    try
+                    { TotalBV += Model.BV; }
+                    catch (NullReferenceException ex)
+                    { TotalBV += 0; }
+
+                    try
+                    { TotalCost += Model.Cost; }
+                    catch (NullReferenceException ex)
+                    { TotalCost += 0; }
+
+                    try
+                    { TotalPrice += Model.Price; }
+                    catch (NullReferenceException ex)
+                    { TotalPrice += 0; }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" align="right">Total</td>
+                    <td>@TotalPV</td>
+                    <td>@TotalBV</td>
+                    <td>@TotalCost</td>
+                    <td>@TotalPrice</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+                    }

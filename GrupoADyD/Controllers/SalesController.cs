@@ -135,23 +135,32 @@ namespace GrupoADyD.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult FindById(int Id)
+        public ActionResult FindClientById(int Id)
         {
             return PartialView("_ClientSale", ClientRepository.FindById(Id));
         }
 
         public ActionResult FindProduct(string NameOrCode)
         {
-            //var result = db.Products.Where(p => p.Name.Contains(NameOrCode)).ToList();
 
-            var result = db.Products.FirstOrDefault(p => p.Code == NameOrCode);
+            var productName = db.Products.FirstOrDefault(p => p.Name.Contains(NameOrCode));
 
-            return PartialView("_ProductSale", result);
+            if (productName == null)
+            {
+                var productCode = db.Products.FirstOrDefault(p => p.Code == NameOrCode);
 
-            //if (result == null)
-            //    return PartialView("_ProductSale", result);
-            //else
-            //return PartialView("_ProductSale", db.Products.Where(p => p.Code.Contains(NameOrCode)).ToList());
+                return PartialView("_ProductSale", productCode);
+            }
+            else {
+                return PartialView("_ProductSale", productName);
+            }
+        }
+
+        public ActionResult AddProductToTable(string Code)
+        {
+            var product = db.Products.FirstOrDefault(p => p.Code == Code);
+
+            return PartialView("_TableSale", product);
         }
     }
 }

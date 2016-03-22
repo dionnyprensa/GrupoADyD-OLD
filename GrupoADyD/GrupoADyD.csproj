@@ -353,7 +353,7 @@
     <Content Include="Views\Sales\Details.cshtml" />
     <Content Include="Views\Sales\Edit.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
-    <Content Include="Views\Sales\_SalePartial.cshtml" />
+    <Content Include="Views\Sales\_TableSale.cshtml" />
     <Content Include="Views\Sales\_ClientSale.cshtml" />
     <Content Include="Views\Sales\_ProductSale.cshtml" />
   </ItemGroup>

@@ -28,6 +28,7 @@
             <div class="col-md-3">
                 <label class="col-sm-3 control-label">Producto</label>
                 <div class="form-group">
+                    <div></div>
                     <div class="input-group">
                         <input type="text" class="form-control" id="TextProduct" placeholder="Codigo o Nombre">
                         <span class="input-group-btn">
@@ -37,15 +38,25 @@
                 </div>
             </div>
         </div>
+
         <br />
-        @Html.Partial("~/Views/Sales/_ClientSale.cshtml")
-        @Html.Partial("~/Views/Sales/_ProductSale.cshtml")
+
+        <div class="row">
+            <div class="col-md-3">
+                @Html.Partial("~/Views/Sales/_ClientSale.cshtml")
+            </div>
+            <div class="col-md-3">
+                @Html.Partial("~/Views/Sales/_ProductSale.cshtml")
+            </div>
+        </div>
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <hr />
 
-        @Html.Partial("~/Views/Sales/_SalePartial.cshtml")
+        <div class="row">
+            @Html.Partial("~/Views/Sales/_TableSale.cshtml")
+        </div>
 
     }
 </div>
@@ -58,35 +69,70 @@
 
     $('#DetailsClient').html(null);
     $('#DetailsProduct').html(null);
+    //$('#TableProducts').html(null);
 
+    //Dropdown que tiene el CLiente a buscar
     var dropd = document.getElementById("Client");
+
+    //Caja de texto que recibe el codigo de Producto a buscar
     var textProducts = $(TextProduct).val();
 
-    function IdClient() {
-        return dropd.options[dropd.selectedIndex].text;
-    }
+    //Caja de texto que recibe el codigo de Producto a buscar
+    var CodeProduct = '';
 
+
+
+    //Vigila el dropdown
+    //Si se selecciona otro elemento del DropDown..
     $('.form-group #Client').change(function () {
 
-        if (IdClient() != "Seleccione..") {
-            $.post("FindById", { "Id": dropd.value }, function (data) {
+        //Si el indidce no es Cero
+        if (dropd.options[dropd.selectedIndex].text != "Seleccione..") {
+
+            //Traer via Ajax (con jQuery POST) el Cliente a travez del Id
+            $.post("FindClientById", { "Id": dropd.value }, function (data) {
+
+                //Devuelve el cliente a la vista parcial
                 $('#DetailsClient').html(data);
             });
         }
+        //De lo contrario
         else {
+
+            //Devuelve null a la vista parcial
             $('#DetailsClient').html(null);
         }
     });
 
-    $('.form-group #SearchProduct').click(function () {
-        if ($(TextProduct).val().length < 1 || ($(TextProduct).val() == "")) {
 
-        }
+
+    //Vigila el input text que recibira el codigo
+    //Si se presiona en buscar..
+    $(SearchProduct).click(function () {
+
+        //Valida que tenga el input tenga datos
+        if ($(TextProduct).val().length < 1 || ($(TextProduct).val() == "")) { }
+        //De lo contrario
         else if ($(TextProduct).val().length >= 1) {
-            $.post("FindProduct", { "NameOrCode": $(TextProduct).val() }, function (data) {
-                $('#DetailsProduct').html(data);
-            });
 
+            //Traer via Ajax (con jQuery POST) el Cliente a travez del Id
+
+            $.post("FindProduct", { "NameOrCode": $(TextProduct).val() }, function (data) {
+
+                //Devuelve el Pa la vista parcial
+                $('#DetailsProduct').html(data);
+
+                //Caja de texto que recibe el codigo de Producto a buscar
+                CodeProduct = $('input[name=Code]').val();
+            });
+        }
+        else {
+
+            //Devuelve null a la vista parcial
+            $('#DetailsProduct').html(null);
+
+            //Caja de texto que recibe el codigo de Producto a buscar
+            CodeProduct = $('input[name=Code]').val();
         }
     });
 </script>
