@@ -14,20 +14,23 @@ namespace GrupoADyD.Models
 
         public int SaleId { get; set; }
 
+        [DisplayName("Cantidad")]
+        public ushort Count { get; set; }
+
         [DisplayName("Descuento")]
         public decimal Discount { get; set; }
-
-        [DisplayName("Costo")]
-        public decimal Cost { get; set; }
-
-        [DisplayName("Precio")]
-        public decimal Price { get; set; }
 
         public virtual Sale Sale { get; set; }
 
         [ForeignKey("ProductId")]
         public virtual ICollection<Product> Products { get; set; }
-
-        public virtual Client Client { get; set; }
     }
 }
+
+
+
+//[DisplayName("Costo")]
+//public decimal Cost { get; set; }
+
+//[DisplayName("Precio")]
+//public decimal Price { get; set; }

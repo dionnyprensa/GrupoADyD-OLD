@@ -8,8 +8,8 @@ namespace GrupoADyD.Models
 {
     public class Product
     {
-        [DisplayName("Id")]
         [Key]
+        [DisplayName("Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 

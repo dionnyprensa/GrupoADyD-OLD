@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,9 +8,9 @@ namespace GrupoADyD.Models
 {
     public class Sale
     {
-        [DisplayName("Id")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DisplayName("Id")]
         public int SaleId { get; set; }
 
         [DisplayName("# de Venta")]
@@ -21,6 +22,7 @@ namespace GrupoADyD.Models
         [DisplayName("Detalles")]
         public int DetaildSaledId { get; set; }
 
+        [DisplayName("Total")]
         public decimal Total { get; set; }
 
         public virtual Client Client { get; set; }

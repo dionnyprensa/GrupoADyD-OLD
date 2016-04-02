@@ -188,10 +188,27 @@ namespace GrupoADyD.Controllers
                 {
                     ProductsTable = TempData["ProductsTable"] as List<Product>;
 
-                    Total = Total + 1;
-                }
+                    foreach (var p in ProductsTable)
+                    {
+                        if(p.Code == product.Code)
+                        {
+                            var newProduct = ProductsTable.FirstOrDefault(x => x.Code == product.Code);
 
-                ProductsTable.Add(product);
+                            //newProduct.
+                            ProductsTable.Add(newProduct);
+
+                            Total++;
+                        }
+                        else
+                        {
+                            ProductsTable.Add(product);
+                        }
+                    }
+                }
+                else
+                {
+                    ProductsTable.Add(product);
+                }
 
                 foreach (var e in Duplicates)
                 {
@@ -214,7 +231,6 @@ namespace GrupoADyD.Controllers
 
                 DataPersist();
             }
-
             return PartialView("_TableSale", ProductsTable);
         }
 
@@ -226,7 +242,7 @@ namespace GrupoADyD.Controllers
                 var tbv = TempData["TotalBV"];
                 var tc = TempData["TotalCost"];
                 var tp = TempData["TotalPrice"];
-                var t = TempData["Total"];
+                var t = TempData["TotalCantidad"];
                 var tpr = TempData["TotalPerProduct"];
 
                 TotalPV += (decimal)tpv;
@@ -241,7 +257,7 @@ namespace GrupoADyD.Controllers
             TempData["TotalBV"] = TotalBV;
             TempData["TotalCost"] = TotalCost;
             TempData["TotalPrice"] = TotalPrice;
-            TempData["Total"] = Total;
+            TempData["TotalCantidad"] = Total;
             TempData["TotalPerProduct"] = TotalPerProduct;
             TempData["IndexProduct"] = 1;
             TempData["ProductsTable"] = ProductsTable;

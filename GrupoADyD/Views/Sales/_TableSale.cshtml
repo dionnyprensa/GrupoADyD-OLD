@@ -6,8 +6,9 @@
     var TotalBV = TempData["TotalBV"];
     var TotalCost = TempData["TotalCost"];
     var TotalPrice = TempData["TotalPrice"];
-    var Total = TempData["Total"];
+    var Total = TempData["TotalCantidad"];
     var TotalPerProduct = TempData["TotalPerProduct"];
+    var qName = 0;
 
     TotalPerProduct = Convert.ToInt16(TotalPerProduct);
 
@@ -38,84 +39,127 @@
                     <th>BV</th>
                     <th>Costo</th>
                     <th>Price</th>
+                    <th>Total</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @if (ViewBag.HasProduct != null)
                 {
-                    foreach (var Product in Model /*Model*/)
+                    foreach (var Product in Model)
                     {
-                        <tr>
-                            <td>
-                                <a href="~/Products/Details/@Html.DisplayFor(ModelItem => Product.ProductId)">
+                        <tr id="Row">
+                            <td id="ProductCode" name="Code">
+                                @Html.Display(qName.ToString())
+                                <a name="Code" href="~/Products/Details/@Html.DisplayFor(ModelItem => Product.ProductId)">
                                     @Html.DisplayFor(ModelItem => Product.Code)
                                 </a>
                             </td>
-                            <td>
+
+                            <td id="ProductName" name="Name">
                                 <a href="~/Products/Details/@Html.DisplayFor(ModelItem => Product.ProductId)">
                                     @Html.DisplayFor(ModelItem => Product.Name)
                                 </a>
                             </td>
-                            <td>
+
+                            <td id="ProductAmount" name="Amount">
                                 <div class="col-xs-5" style="width: 90px;">
-                                    <input id="TotalQuantity" name="TotalQuantity" class="form-control col-xs-5" type="number" value="@TotalPerProduct" min="1" max="20" maxlength="20" />
+                                    @Html.TextBox("TotalQuantity", TotalPerProduct.ToString(), new { @class = "form-control col-xs-5", type = "number", min = "1", max = "20" })
+                                    @*
+                <input id="TotalQuantity" name="TotalQuantity" class="form-control col-xs-5" type="number" value="@TotalPerProduct" min="1" max="20" maxlength="20" />*@
                                 </div>
                             </td>
-                            <td>
-                                @Html.DisplayFor(ModelItem => Product.PV)
+
+                            <td id="ProductPV" name="PV">
+                                <span>@Html.DisplayFor(ModelItem => Product.PV)</span>
                             </td>
-                            <td>
+
+                            <td id="ProductBV" name="BV">
                                 @Html.DisplayFor(ModelItem => Product.BV)
                             </td>
-                            <td>
+
+                            <td id="ProductCost" name="Cost">
                                 @Html.DisplayFor(ModelItem => Product.Cost)
                             </td>
-                            <td>
+
+                            <td id="ProductPrice" name="Price">
                                 @Html.DisplayFor(ModelItem => Product.Price)
                             </td>
+
+                            @{
+                                Total = Convert.ToDecimal(TotalPerProduct.ToString()) * Product.Price;
+                            }
+
+                            <td id="ProductTotalPerProduct" name="TotalPerProduct">
+                                @Total
+                            </td>
+
                             <td>
                                 <input class="btn btn-default" type="button" title="Quitar Producto" value="Quitar" id="RemoveProduct" hidden="@Html.DisplayFor(ModelItem => Product.ProductId)" name="RemoveProduct" />
                             </td>
+
                         </tr>
-                    }
-                }
+                                    }
+                                }
             </tbody>
             <tfoot>
                 @if (ViewBag.HasProduct != null)
                 {
-                    <tr>
-                        <td colspan="2" align="right">Total</td>
-                        <td>
-                            <span id="ShowTotal" class="col-sm-offset-5">1</span>
-                            <input type="hidden" name="Total" id="Total" value="@Total" />
-                        </td>
-                        <td>@TotalPV</td>
-                        <td>@TotalBV</td>
-                        <td>@TotalCost</td>
-                        <td>@TotalPrice</td>
-                        <td></td>
-                    </tr>
+                <tr>
+                    <td colspan="2" align="right">Total</td>
+                    <td>
+                        <span id="ShowTotal" class="col-sm-offset-5">1</span>
+                        <input type="hidden" name="Total" id="Total" value="@Total" />
+                    </td>
+                    <td>@TotalPV</td>
+                    <td>@TotalBV</td>
+                    <td>@TotalCost</td>
+                    <td>@TotalPrice</td>
+                    <td>@Total</td>
+                    <td></td>
+                </tr>
                     TempData["TotalPV"] = TotalPV;
                     TempData["TotalBV"] = TotalBV;
                     TempData["TotalCost"] = TotalCost;
                     TempData["TotalPrice"] = TotalPrice;
-                    TempData["Total"] = Total;
+                    TempData["TotalCantidad"] = Total;
                     TempData["TotalPerProduct"] = TotalPerProduct;
                 }
             </tfoot>
         </table>
     </div>
-}
+                                }
 <script>
     $(document).ready(function () {
-        $("#TotalQuantity").bind('keyup mouseup', function (e) {
+
+        $("#TotalPerProduct").text('1');
+
+        $("input#TotalQuantity").bind('keyup mouseup', function (e) {
 
             var Clicked = e.target.value;
 
             $("#ShowTotal").text(Clicked);
 
             $("#Total").val(Clicked);
+
+            $("#ProductTotalPerProduct").text(Clicked);
+
+            var price = $("td#ProductPrice").html();
+
+            //console.log(price);
+
+            price.toString().replace(",", ".");
+
+            var newTotal = parseFloat(price) * parseFloat(Clicked);
+
+            //console.log(newTotal);
+            newTotal = parseFloat(Math.round(newTotal * 100) / 100).toFixed(2);
+
+            //newTotal.toString().replace(".", ",");
+
+            $("#ProductTotalPerProduct").text(newTotal);
+
+            $("#ProductTotalPerProduct").html(newTotal);
         });
     });
 </script>
